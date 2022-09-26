@@ -17,6 +17,7 @@ public class PuzzleUnitTests {
         pw.println("678");
         assertEquals(b.toString(), writer.toString());
         pw.close();
+
     }
 
     @Test
