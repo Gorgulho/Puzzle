@@ -62,7 +62,12 @@ public class BestFirst {
         abertos.add(new State(s, null));
         List<State> sucs;
         // TO BE COMPLETED
-        sucessores(abertos.element());
+        //sucessores(abertos.element());
+        /**for (State u : abertos) {
+            if ((u.layout).equals(goal)) {
+                System.out.printf("ola");
+            }
+        }**/
         return null;
     }
 }

@@ -53,7 +53,15 @@ class Board implements Ilayout, Cloneable {
 
     public boolean equals(Object o) {
         // TO BE COMPLETED
-        return false;
+        boolean a = true;
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                if(this.board[i][j] != ((Board) o).board[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return a;
     }
 
     public int hashCode() {
