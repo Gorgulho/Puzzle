@@ -15,6 +15,7 @@ public class Main {
                 if (!it.hasNext()) System.out.println(i.getG());
             }
         }
+        System.out.println("hello");
         sc.close();
     }
 }
