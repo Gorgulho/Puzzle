@@ -61,13 +61,20 @@ public class BestFirst {
         fechados = new HashMap<>();
         abertos.add(new State(s, null));
         List<State> sucs;
-        // TO BE COMPLETED
+
+        while (true){
+            actual = abertos.poll();
+            if (actual == null) System.exit(0);
+            if (actual.layout.isGoal(objective)) break;
+
+
+        }
         //sucessores(abertos.element());
-        /**for (State u : abertos) {
+        for (State u : abertos) {
             if ((u.layout).equals(goal)) {
                 System.out.printf("ola");
             }
-        }**/
+        }
         return null;
     }
 }

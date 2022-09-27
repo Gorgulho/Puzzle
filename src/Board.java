@@ -18,7 +18,6 @@ class Board implements Ilayout, Cloneable {
         for (int i = 0; i < dim; i++)
             for (int j = 0; j < dim; j++)
                 board[i][j] = Character.getNumericValue(str.charAt(si++));
-
     }
 
     @Override
@@ -28,7 +27,7 @@ class Board implements Ilayout, Cloneable {
 
     @Override
     public boolean isGoal(Ilayout l) {
-        return false;
+        return equals(l);
     }
 
     @Override
@@ -52,8 +51,6 @@ class Board implements Ilayout, Cloneable {
     }
 
     public boolean equals(Object o) {
-        // TO BE COMPLETED
-        boolean a = true;
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
                 if(this.board[i][j] != ((Board) o).board[i][j]) {
@@ -61,7 +58,7 @@ class Board implements Ilayout, Cloneable {
                 }
             }
         }
-        return a;
+        return true;
     }
 
     public int hashCode() {
