@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 class Board implements Ilayout, Cloneable {
@@ -20,9 +20,53 @@ class Board implements Ilayout, Cloneable {
                 board[i][j] = Character.getNumericValue(str.charAt(si++));
     }
 
+    private Board changePosition (Board b, int i, int j, int x, int y) {
+        Board nova = new Board();
+        for (int k = 0; k < dim; k++) {
+            for (int l = 0; l < dim; l++) {
+                nova.board[k][l] = b.board[k][l];
+            }
+        }
+        int position = nova.board[j+y][i+x];
+        nova.board[j+y][i+x] = 0;
+        nova.board[j][i] = position;
+        System.out.println(nova);
+        return nova;
+    }
+
+    private int[] findzero (Board board) {
+        int []a = new int[2];
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                if (board.board[i][j] == 0) {
+                    a[0] = i;
+                    a[1] = j;
+                    return a;
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
     public List<Ilayout> children() {
-        return null;
+        List<Ilayout> child = new ArrayList<>();
+        int[] a = findzero(this);
+        if (a != null) {
+            if (a[0] - 1 >= 0 && a[0] - 1 < dim) {
+                child.add(changePosition(this, a[1], a[0], -1, 0));
+            }
+            if (a[1] - 1 >= 0 && a[1] - 1 < dim) {
+                child.add(changePosition(this, a[1], a[0], 0, -1));
+            }
+            if (a[0] + 1 >= 0 && a[0] + 1 < dim) {
+                child.add(changePosition(this, a[1], a[0], 1, 0));
+            }
+            if (a[1] + 1 >= 0 && a[1] + 1 < dim) {
+                child.add(changePosition(this, a[1], a[0], 0, 1));
+            }
+        }
+        return child;
     }
 
     @Override
