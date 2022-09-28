@@ -11,20 +11,29 @@ public class BestFirst {
         private Ilayout layout;
         private State father;
         private double g;
+
         public State(Ilayout l, State n) {
             layout = l;
             father = n;
-            if (father!=null)
+            if (father != null)
                 g = father.g + l.getG();
             else g = 0.0;
         }
-        public String toString() { return layout.toString(); }
-        public double getG() {return g;}
+
+        public String toString() {
+            return layout.toString();
+        }
+
+        public double getG() {
+            return g;
+        }
+
         public int hashCode() {
             return toString().hashCode();
         }
-        public boolean equals (Object o) {
-            if (o==null) return false;
+
+        public boolean equals(Object o) {
+            if (o == null) return false;
             if (this.getClass() != o.getClass()) return false;
             State n = (State) o;
             return this.layout.equals(n.layout);
@@ -33,7 +42,6 @@ public class BestFirst {
 
     final private List<State> sucessores(State n) {
         List<State> sucs = new ArrayList<>();
-        System.out.println(n.layout);
         List<Ilayout> children = n.layout.children(); // children will make the children of the board we pass as argument
         for (Ilayout e : children) {
             if (n.father == null || !e.equals(n.father.layout)) {
@@ -65,13 +73,14 @@ public class BestFirst {
             }
         }
 
-        State result = actual;
-        Stack<State> solution = new Stack<>();
+        List<State> solution = new ArrayList<>();
 
-        while (result.father != null) {
-            solution.add(result);
-            result = result.father;
+        while (actual != null) {
+            solution.add(actual);
+            actual = actual.father;
         }
+
+        Collections.reverse(solution);
 
         return solution.iterator();
     }

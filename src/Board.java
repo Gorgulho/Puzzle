@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class Board implements Ilayout, Cloneable {
@@ -38,7 +39,6 @@ class Board implements Ilayout, Cloneable {
         int position = nova.board[zeroI+i][zeroJ+j];
         nova.board[zeroI+i][zeroJ+j] = 0;
         nova.board[zeroI][zeroJ] = position;
-        System.out.println(nova);
         return nova;
     }
 
@@ -116,7 +116,9 @@ class Board implements Ilayout, Cloneable {
     }
 
     public int hashCode() {
-        // TO BE COMPLETED
-        return 0;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.deepHashCode(board);
+        return result;
     }
 }
