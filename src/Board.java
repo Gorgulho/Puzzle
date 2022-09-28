@@ -103,6 +103,8 @@ class Board implements Ilayout, Cloneable {
     }
 
     public boolean equals(Object o) {
+        if(o == null) return false;
+        if(this.getClass() != o.getClass()) return false;
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
                 if(this.board[i][j] != ((Board) o).board[i][j]) {
