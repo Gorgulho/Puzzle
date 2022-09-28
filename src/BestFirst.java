@@ -11,33 +11,23 @@ public class BestFirst {
         private Ilayout layout;
         private State father;
         private double g;
-        private State state;
-
         public State(Ilayout l, State n) {
             layout = l;
             father = n;
-            if (father != null)
+            if (father!=null)
                 g = father.g + l.getG();
             else g = 0.0;
         }
-
-        public String toString() {
-            return layout.toString();
-        }
-
-        public double getG() {
-            return g;
-        }
-
+        public String toString() { return layout.toString(); }
+        public double getG() {return g;}
         public int hashCode() {
             return toString().hashCode();
         }
-
-        public boolean equals(Object o) {
-            if (o == null) return false;
+        public boolean equals (Object o) {
+            if (o==null) return false;
             if (this.getClass() != o.getClass()) return false;
             State n = (State) o;
-            return this.state.equals(n.state);
+            return this.layout.equals(n.layout);
         }
     }
 
@@ -62,19 +52,27 @@ public class BestFirst {
         abertos.add(new State(s, null));
         List<State> sucs;
 
-        while (true){
+        while (true) {
             actual = abertos.poll();
             if (actual == null) System.exit(0);
             if (actual.layout.isGoal(objective)) break;
+            sucs = sucessores(actual);
 
+            fechados.put(actual.layout, actual);
 
-        }
-        //sucessores(abertos.element());
-        for (State u : abertos) {
-            if ((u.layout).equals(goal)) {
-                System.out.printf("ola");
+            for (State st : sucs) {
+                if (!fechados.containsValue(st)) abertos.add(st);
             }
         }
-        return null;
+
+        State result = actual;
+        Stack<State> solution = new Stack<>();
+
+        while (result.father != null) {
+            solution.add(result);
+            result = result.father;
+        }
+
+        return solution.iterator();
     }
 }

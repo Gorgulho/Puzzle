@@ -30,7 +30,7 @@ class Board implements Ilayout, Cloneable {
         int position = nova.board[j+y][i+x];
         nova.board[j+y][i+x] = 0;
         nova.board[j][i] = position;
-        System.out.println(nova);
+        //System.out.println(nova);
         return nova;
     }
 
@@ -76,7 +76,7 @@ class Board implements Ilayout, Cloneable {
 
     @Override
     public double getG() {
-        return this.getG();
+        return 1;
     }
     //... TO BE COMPLETED
 
