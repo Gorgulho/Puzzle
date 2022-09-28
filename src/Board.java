@@ -5,6 +5,8 @@ class Board implements Ilayout, Cloneable {
 
     private static final int dim = 3;
     private int board[][];
+    private int zeroI;
+    private int zeroJ;
 
     public Board() {
         board = new int[dim][dim];
@@ -20,52 +22,58 @@ class Board implements Ilayout, Cloneable {
                 board[i][j] = Character.getNumericValue(str.charAt(si++));
     }
 
-    private Board changePosition (Board b, int i, int j, int x, int y) {
-        Board nova = new Board();
-        for (int k = 0; k < dim; k++) {
-            for (int l = 0; l < dim; l++) {
-                nova.board[k][l] = b.board[k][l];
+    public String matrixToString(){
+        String string = "";
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
+                string += this.board[i][j];
             }
         }
-        int position = nova.board[j+y][i+x];
-        nova.board[j+y][i+x] = 0;
-        nova.board[j][i] = position;
+        return string;
+    }
+
+    private Board changePosition (int i, int j) {
+        Board nova = new Board(matrixToString());
+
+        int position = nova.board[zeroI+i][zeroJ+j];
+        nova.board[zeroI+i][zeroJ+j] = 0;
+        nova.board[zeroI][zeroJ] = position;
         System.out.println(nova);
         return nova;
     }
 
-    private int[] findzero (Board board) {
-        int []a = new int[2];
+    private void findzero () {
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
-                if (board.board[i][j] == 0) {
-                    a[0] = i;
-                    a[1] = j;
-                    return a;
+                if (this.board[i][j] == 0) {
+                    zeroI = i;
+                    zeroJ = j;
+                    return;
                 }
             }
         }
-        return null;
     }
 
     @Override
     public List<Ilayout> children() {
         List<Ilayout> child = new ArrayList<>();
-        int[] a = findzero(this);
-        if (a != null) {
-            if (a[0] - 1 >= 0 && a[0] - 1 < dim) {
-                child.add(changePosition(this, a[1], a[0], -1, 0));
-            }
-            if (a[1] - 1 >= 0 && a[1] - 1 < dim) {
-                child.add(changePosition(this, a[1], a[0], 0, -1));
-            }
-            if (a[0] + 1 >= 0 && a[0] + 1 < dim) {
-                child.add(changePosition(this, a[1], a[0], 1, 0));
-            }
-            if (a[1] + 1 >= 0 && a[1] + 1 < dim) {
-                child.add(changePosition(this, a[1], a[0], 0, 1));
-            }
+        findzero();
+
+        if (zeroJ-1 >= 0) {
+            child.add(changePosition(0, -1));
         }
+        if (zeroI-1 >= 0) {
+            child.add(changePosition( -1, 0));
+        }
+        if (zeroJ+1 < dim) {
+            child.add(changePosition( 0, 1));
+        }
+        if (zeroI+1 < dim) {
+            child.add(changePosition( 1, 0));
+        }
+
+
+
         return child;
     }
 
