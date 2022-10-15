@@ -29,7 +29,7 @@ public class BestFirst {
         }
 
         public int hashCode() {
-            return toString().hashCode();
+            return layout.hashCode();
         }
 
         public boolean equals(Object o) {
@@ -46,7 +46,7 @@ public class BestFirst {
         for (Ilayout e : children) {
             if (n.father == null || !e.equals(n.father.layout)) {
                 State nn = new State(e, n);
-                sucs.add(nn);
+                if (!fechados.containsKey(nn.layout)) sucs.add(nn);
             }
         }
         return sucs;
@@ -64,13 +64,15 @@ public class BestFirst {
             actual = abertos.poll();
             if (actual == null) System.exit(0);
             if (actual.layout.isGoal(objective)) break;
+            fechados.put(actual.layout, actual);
             sucs = sucessores(actual);
 
-            fechados.put(actual.layout, actual);
 
-            for (State st : sucs) {
+            abertos.addAll(sucs);
+
+            /*for (State st : sucs) {
                 if (!fechados.containsValue(st)) abertos.add(st);
-            }
+            }*/
         }
 
         List<State> solution = new ArrayList<>();
